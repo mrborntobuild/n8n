@@ -4,16 +4,18 @@ FROM n8nio/n8n:latest
 # Railway requires a non-root user
 USER root
 
-# Create directories
+# Ensure the node user has the correct permissions and directories
 RUN mkdir -p /home/node/.n8n && \
-    chown -R node:node /home/node
+    chown -R node:node /home/node && \
+    chmod -R 755 /home/node
 
 # Switch back to node user
 USER node
 
-# Set n8n to listen on Railway's PORT
+# Set environment variables for Railway
 ENV N8N_PORT=5678
 ENV NODE_ENV=production
+ENV N8N_HOST=0.0.0.0
 
 EXPOSE 5678
 

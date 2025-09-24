@@ -1,0 +1,7 @@
+FROM n8nio/n8n:latest
+
+# Railway will set PORT, we need to use it for N8N_PORT
+ENV N8N_HOST=0.0.0.0
+
+# The official n8n image already has the right entrypoint
+# We just need to make sure it uses Railway's PORT

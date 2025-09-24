@@ -1,0 +1,10 @@
+FROM n8nio/n8n:latest
+
+# Set the host to bind to all interfaces
+ENV N8N_HOST=0.0.0.0
+
+# Railway will provide PORT, n8n will use N8N_PORT
+ENV N8N_PORT=$PORT
+
+# Expose the port (Railway will override this)
+EXPOSE 5678

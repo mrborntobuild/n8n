@@ -1,0 +1,19 @@
+FROM n8nio/n8n:latest
+
+# Railway compatibility
+USER root
+RUN mkdir -p /home/node/.n8n && chown -R node:node /home/node
+USER node
+
+# Environment for Railway
+ENV NODE_ENV=production
+ENV N8N_HOST=0.0.0.0
+
+# Health check endpoint
+HEALTHCHECK --interval=30s --timeout=3s --start-period=5s --retries=3 \
+  CMD curl -f http://localhost:${PORT:-5678}/healthz || exit 1
+
+EXPOSE ${PORT:-5678}
+
+# Simple entrypoint that respects Railway's PORT
+CMD ["sh", "-c", "export N8N_PORT=${PORT:-5678} && /docker-entrypoint.sh"]
